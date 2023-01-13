@@ -22,7 +22,7 @@ async def root():
 @app.post("/predict",response_model=PredictionResults, status_code=200)
 async def predict(input_data: MultipleBCancerDataInputs) -> any:
     """
-    make breast cancer prediction with random forst essemble model
+    Breast cancer prediction with random forst essemble model
     """
     logger.info(f"Making prediction on inputs: {input_data.inputs}")
     input_df = pd.DataFrame(jsonable_encoder(input_data.inputs))
