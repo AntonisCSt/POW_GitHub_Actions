@@ -12,6 +12,9 @@ sklearn = "*"
 loguru = "*"
 
 [dev-packages]
+flake8 = "*"
+black = "*"
+isort = "*"
 
 [requires]
 python_version = "3.10"

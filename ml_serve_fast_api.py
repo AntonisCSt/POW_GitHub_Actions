@@ -1,25 +1,27 @@
-from fastapi import FastAPI
-import uvicorn
 import pickle
+
 import numpy as np
 import pandas as pd
-
+import uvicorn
+from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 from loguru import logger
-from schemas.predict import MultipleBCancerDataInputs
-from schemas.predict import PredictionResults
+
+from schemas.predict import MultipleBCancerDataInputs, PredictionResults
 
 # load the model from disk
-filename = filename = './model/bcancer_model_v1.pkl'
-loaded_model = pickle.load(open(filename, 'rb'))
+filename = filename = "./model/bcancer_model_v1.pkl"
+loaded_model = pickle.load(open(filename, "rb"))
 
 app = FastAPI(debug=True)
+
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
-@app.post("/predict",response_model=PredictionResults, status_code=200)
+
+@app.post("/predict", response_model=PredictionResults, status_code=200)
 async def predict(input_data: MultipleBCancerDataInputs) -> any:
     """
     Breast cancer prediction with random forst essemble model
@@ -31,13 +33,12 @@ async def predict(input_data: MultipleBCancerDataInputs) -> any:
     result = loaded_model.predict(input_df.replace({np.nan: None}))
 
     results = {
-            "predictions": [pred for pred in result],  # type: ignore
-            "version": 'test'
-        }
+        "predictions": [pred for pred in result],  # type: ignore
+        "version": "test",
+    }
     logger.info(f"Prediction results: {results}")
     return results
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     uvicorn.run(app)
