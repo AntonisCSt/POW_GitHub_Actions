@@ -27,6 +27,6 @@ jobs:
         run: |
           pipenv install -d
           pipenv run flake8
-          pipenv run black
-          pipenv run isort
+          pipenv run black .
+          pipenv run isort .
           pipenv run pytest
