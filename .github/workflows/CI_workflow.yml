@@ -26,5 +26,6 @@ jobs:
       - name: Run pipenv and tests
         run: |
           pipenv install -d
-          
           pipenv run flake8
+      - name: show me the repo
+        run: ls
